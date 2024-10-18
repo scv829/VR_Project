@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
     private void Move()
     {
         // 카메라가 움직일 때 마다 플레이어의 피격도 움직인다
-        transform.position =playerCamera.transform.position;
+        transform.position = new Vector3( playerCamera.transform.position.x, transform.position.y, playerCamera.transform.position.z);
     }
 
 
