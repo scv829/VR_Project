@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -18,7 +19,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] private PlayerController player;
     [SerializeField] private Vector3 returnPos;     // 돌진 전 위치
     [SerializeField] private float moveSpeed;       // 이동 속도 
-    [SerializeField] Animator animator;             // 애니메이터 
+    [SerializeField] Animator animator;             // 애니메이터
+    [SerializeField] CinemachineDollyCart cart;     // 시네머시 돌리카트
 
     [Header("State")]
     [SerializeField] State curState;
@@ -78,6 +80,7 @@ public class Enemy : MonoBehaviour
             // 좌우 반복할 횟수
             refeatTime = Random.Range(1, 4);
             traceStart = false;
+            enemy.animator.SetFloat("Turn", 0);
         }
 
         public override void Update()
@@ -100,28 +103,34 @@ public class Enemy : MonoBehaviour
                 enemy.StopCoroutine(moveRoutine);
                 moveRoutine = null;
             }
+            enemy.animator.SetFloat("Turn", 0);
         }
 
         private IEnumerator MoveRoutine()
         {
-            // 좌우로 이동하다가 출발
+            // 시나리오
+            // 1.단 좌우 이동할 횟수를 정한다
+            // 2. 좌우를 이동할 횟수만큼 이동하는데
+            // 3. 거리도 5~10정도의 거리로 랜덤으로 이동한다
+            // 4.이걸 이동할 횟수만큼 반복하고 
+            // 5. 다 반복하면 돌진을 시작한다
 
-/*            bool moveDir = true;    // +: 우측 , -: 좌측
+            bool moveDir = true;    // +: 우측 , -: 좌측
             for (int i = 0; i < refeatTime; i++)
             {
-                float distance = Random.Range(5f, 15f);  // 5~15 만큼이동
-                Vector3 pos = enemy.transform.position + ((moveDir) ? Vector3.right : Vector3.left) * enemy.moveSpeed * distance;
-                enemy.animator.SetBool("Turn", moveDir);
-                while (true)
+                float delay = Random.Range(1f, 3f);  // 1~3초 만큼 돌리트랙에서 이동
+                float value = 0f;                       
+                enemy.animator.SetFloat("Turn", (moveDir ? 1 : -1));
+                while (value < delay)
                 {
-                    enemy.transform.Translate(((moveDir) ? Vector3.right : Vector3.left) * enemy.moveSpeed * Time.deltaTime);
-                    if (enemy.transform.position.Equals(pos)) break;
+                    enemy.cart.m_Position +=  (moveDir ? 1 : -1 ) * enemy.moveSpeed * Time.deltaTime;
+                    value += Time.deltaTime;
+                    yield return null;
                 }
                 moveDir = !moveDir;
-            }*/
-
-            traceStart = true;
                 yield return null;
+            }
+            traceStart = true;
         }
     }
 
@@ -151,6 +160,7 @@ public class Enemy : MonoBehaviour
         public override void Update()
         {
             // 플레이어를 향해 돌진
+            enemy.transform.LookAt(enemy.player.gameObject.transform);
             enemy.transform.position = Vector3.MoveTowards(enemy.transform.position, enemy.player.gameObject.transform.position, traceSpeed * Time.deltaTime);
 
             // 만약 공격 범위에 들어 왔으면 공격 실행
@@ -158,11 +168,6 @@ public class Enemy : MonoBehaviour
             {
                 enemy.ChangeState(State.Attack);
             }
-        }
-
-        public override void Exit()
-        {
-            base.Exit();
         }
 
     }
