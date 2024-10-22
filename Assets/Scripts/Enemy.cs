@@ -21,6 +21,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float moveSpeed;       // 이동 속도 
     [SerializeField] Animator animator;             // 애니메이터
     [SerializeField] CinemachineDollyCart cart;     // 시네머시 돌리카트
+    [SerializeField] AttackArea attackArea;
 
     [Header("State")]
     [SerializeField] State curState;
@@ -108,12 +109,7 @@ public class Enemy : MonoBehaviour
 
         private IEnumerator MoveRoutine()
         {
-            // 시나리오
-            // 1.단 좌우 이동할 횟수를 정한다
-            // 2. 좌우를 이동할 횟수만큼 이동하는데
-            // 3. 거리도 5~10정도의 거리로 랜덤으로 이동한다
-            // 4.이걸 이동할 횟수만큼 반복하고 
-            // 5. 다 반복하면 돌진을 시작한다
+            
 
             bool moveDir = true;    // +: 우측 , -: 좌측
             for (int i = 0; i < refeatTime; i++)
@@ -125,6 +121,7 @@ public class Enemy : MonoBehaviour
                 {
                     enemy.cart.m_Position +=  (moveDir ? 1 : -1 ) * enemy.moveSpeed * Time.deltaTime;
                     value += Time.deltaTime;
+                    enemy.transform.LookAt(enemy.player.gameObject.transform.position);
                     yield return null;
                 }
                 moveDir = !moveDir;
@@ -160,11 +157,12 @@ public class Enemy : MonoBehaviour
         public override void Update()
         {
             // 플레이어를 향해 돌진
-            enemy.transform.LookAt(enemy.player.gameObject.transform);
-            enemy.transform.position = Vector3.MoveTowards(enemy.transform.position, enemy.player.gameObject.transform.position, traceSpeed * Time.deltaTime);
+            enemy.transform.LookAt(enemy.player.gameObject.transform.position);
+            Vector3 playerPos = new Vector3(enemy.player.transform.position.x, enemy.transform.position.y, enemy.player.transform.position.z);
+            enemy.transform.position = Vector3.MoveTowards(enemy.transform.position, playerPos, traceSpeed * Time.deltaTime);
 
             // 만약 공격 범위에 들어 왔으면 공격 실행
-            if (Physics.OverlapSphere(enemy.transform.position, 2f, LayerMask.NameToLayer("Player")).Length > 0)
+            if (enemy.attackArea.Target is not null)
             {
                 enemy.ChangeState(State.Attack);
             }
@@ -180,6 +178,7 @@ public class Enemy : MonoBehaviour
     /// </summary>
     private class AttackState : BaseState
     {
+
         private Enemy enemy;
 
         public AttackState(Enemy enemy)
@@ -193,33 +192,29 @@ public class Enemy : MonoBehaviour
             enemy.animator.SetTrigger("AttackTrigger");
         }
 
-        public override void Update()
-        {
-            // 공격로직
-            Debug.Log("공격 로직!");
-            enemy.ChangeState(State.Return);
-        }
-
     }
 
     private class ReturnState : BaseState
     {
         private Enemy enemy;
+        private float returnSpeed;
 
         public ReturnState(Enemy enemy)
         {
             this.enemy = enemy;
+            returnSpeed = enemy.moveSpeed * 2;
         }
 
         public override void Enter()
         {
             // 돌아가는 애니메이션 실행
             enemy.animator.SetBool("Return", true);
+            enemy.animator.speed = returnSpeed;
         }
 
         public override void Update()
         {
-            enemy.transform.position = Vector3.MoveTowards(enemy.transform.position, enemy.returnPos, enemy.moveSpeed * Time.deltaTime);
+            enemy.transform.position = Vector3.MoveTowards(enemy.transform.position, enemy.returnPos, returnSpeed * Time.deltaTime);
             
             if(enemy.transform.position.Equals(enemy.returnPos))
             {
@@ -230,6 +225,7 @@ public class Enemy : MonoBehaviour
         public override void Exit()
         {
             enemy.animator.SetBool("Return", false);
+            enemy.animator.speed = 1;   
         }
     }
 
