@@ -13,6 +13,7 @@ public class Bullet : MonoBehaviour
         this.moveSpeed = moveSpeed;
 
         transform.LookAt(target);
+        
     }
 
     private void Update()
