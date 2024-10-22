@@ -20,12 +20,4 @@ public class Bullet : MonoBehaviour
         transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Wall"))
-        {
-            Destroy(gameObject);
-        }
-    }
-
 }

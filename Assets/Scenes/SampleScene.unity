@@ -374,6 +374,7 @@ GameObject:
   m_Component:
   - component: {fileID: 309548567}
   - component: {fileID: 309548566}
+  - component: {fileID: 309548568}
   m_Layer: 0
   m_Name: Wall (1)
   m_TagString: Wall
@@ -389,7 +390,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 309548565}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 11, y: 3, z: 0.5}
@@ -409,6 +410,18 @@ Transform:
   m_Father: {fileID: 1770644312}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &309548568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 309548565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f12732cf9e348546b9f72c6e69ed579, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &369520036
 GameObject:
   m_ObjectHideFlags: 0
@@ -777,6 +790,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2af506ecb0f24f1479ae26a922ff0b92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!65 &566386334 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 1616071944817785798, guid: baa8abb9e3573814b86fcc06b1d62255, type: 3}
+  m_PrefabInstance: {fileID: 1225550459}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &566386339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -996,6 +1014,7 @@ GameObject:
   m_Component:
   - component: {fileID: 824674485}
   - component: {fileID: 824674484}
+  - component: {fileID: 824674486}
   m_Layer: 0
   m_Name: Wall
   m_TagString: Wall
@@ -1011,7 +1030,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 824674483}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 11, y: 3, z: 0.5}
@@ -1031,6 +1050,18 @@ Transform:
   m_Father: {fileID: 1770644312}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &824674486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 824674483}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f12732cf9e348546b9f72c6e69ed579, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &842971891
 GameObject:
   m_ObjectHideFlags: 0
@@ -1565,8 +1596,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 278438744158817041, guid: baa8abb9e3573814b86fcc06b1d62255, type: 3}
+      propertyPath: parryRange
+      value: 
+      objectReference: {fileID: 566386334}
     - target: {fileID: 1616071944817785798, guid: baa8abb9e3573814b86fcc06b1d62255, type: 3}
       propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5578103435384481787, guid: baa8abb9e3573814b86fcc06b1d62255, type: 3}
+      propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5813829237461754301, guid: baa8abb9e3573814b86fcc06b1d62255, type: 3}
@@ -1579,7 +1618,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5813829237461754301, guid: baa8abb9e3573814b86fcc06b1d62255, type: 3}
       propertyPath: m_LastSelectExited.m_PersistentCalls.m_Calls.Array.size
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5813829237461754301, guid: baa8abb9e3573814b86fcc06b1d62255, type: 3}
       propertyPath: m_FirstSelectEntered.m_PersistentCalls.m_Calls.Array.size
@@ -1681,6 +1720,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shield
       objectReference: {fileID: 0}
+    - target: {fileID: 6446221586504655054, guid: baa8abb9e3573814b86fcc06b1d62255, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6446221586505088238, guid: baa8abb9e3573814b86fcc06b1d62255, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -1723,6 +1766,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6446221586505088238, guid: baa8abb9e3573814b86fcc06b1d62255, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7633845314497921537, guid: baa8abb9e3573814b86fcc06b1d62255, type: 3}
+      propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -2549,6 +2596,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1572073755}
   - component: {fileID: 1572073754}
+  - component: {fileID: 1572073756}
   m_Layer: 0
   m_Name: Wall (3)
   m_TagString: Wall
@@ -2564,7 +2612,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1572073753}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.5, y: 3, z: 11}
@@ -2584,6 +2632,18 @@ Transform:
   m_Father: {fileID: 1770644312}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1572073756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1572073753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f12732cf9e348546b9f72c6e69ed579, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1717198403
 GameObject:
   m_ObjectHideFlags: 0
@@ -2969,6 +3029,10 @@ PrefabInstance:
       propertyPath: m_AllowAnchorControl
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9168142743249570444, guid: 895f6f3c2d334633b5800312285058d2, type: 3}
+      propertyPath: m_MoveSpeed
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8697627143733791174, guid: 895f6f3c2d334633b5800312285058d2, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 895f6f3c2d334633b5800312285058d2, type: 3}
@@ -3098,6 +3162,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2122257803}
   - component: {fileID: 2122257802}
+  - component: {fileID: 2122257804}
   m_Layer: 0
   m_Name: Wall (2)
   m_TagString: Wall
@@ -3113,7 +3178,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2122257801}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.5, y: 3, z: 11}
@@ -3133,6 +3198,18 @@ Transform:
   m_Father: {fileID: 1770644312}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2122257804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2122257801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f12732cf9e348546b9f72c6e69ed579, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1209816349802621 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3122571759697313925, guid: 9b2174eeb791c344096d270514241078, type: 3}
@@ -3151,7 +3228,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1694299278493574}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 2.8400002, y: 0.3511555, z: 2.0434601}
@@ -3218,7 +3295,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1209816349802621}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 2.8400002, y: 0.3511555, z: 2.0434601}
@@ -3414,8 +3491,20 @@ PrefabInstance:
       value: TowerPortal
       objectReference: {fileID: 0}
     - target: {fileID: 3122571759697313925, guid: 9b2174eeb791c344096d270514241078, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3122571759697313925, guid: 9b2174eeb791c344096d270514241078, type: 3}
       propertyPath: m_TagString
       value: Wall
+      objectReference: {fileID: 0}
+    - target: {fileID: 3122908080334033531, guid: 9b2174eeb791c344096d270514241078, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3123073683159420513, guid: 9b2174eeb791c344096d270514241078, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9b2174eeb791c344096d270514241078, type: 3}

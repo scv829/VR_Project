@@ -250,7 +250,7 @@ public class Enemy : MonoBehaviour
             
             if(enemy.transform.position.Equals(enemy.returnPos))
             {
-                enemy.ChangeState(State.Idle);
+                enemy.ChangeState(State.Move);
             }
         }
 
