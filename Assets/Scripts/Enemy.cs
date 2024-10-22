@@ -16,27 +16,32 @@ public class Enemy : MonoBehaviour
     // 8. 2번으로 돌아가기
 
 
-    [SerializeField] private PlayerController player;
-    [SerializeField] private Vector3 returnPos;     // 돌진 전 위치
-    [SerializeField] private float moveSpeed;       // 이동 속도 
+    [SerializeField] PlayerController player;       
+    [SerializeField] Vector3 returnPos;             // 돌진 전 위치
+    [SerializeField] float moveSpeed;               // 이동 속도 
     [SerializeField] Animator animator;             // 애니메이터
     [SerializeField] CinemachineDollyCart cart;     // 시네머시 돌리카트
     [SerializeField] AttackArea attackArea;
+    [SerializeField] Vector3 startPos;              // 시작 위치
+    [SerializeField] bool isStart;                  // 시작했는지 확인
 
     [Header("State")]
     [SerializeField] State curState;
-    public enum State { Idle, Trace, Attack, Return, Die, Size }
+    public enum State { Idle, Move, Trace, Attack, Return, Die, Size }
     private BaseState[] states = new BaseState[(int)State.Size];
+    public void StartMove() => isStart = true;
 
     private void Awake()
     {
         states[(int)State.Idle] = new IdleState(this);
+        states[(int)State.Move] = new MoveState(this);
         states[(int)State.Trace] = new TraceState(this);
         states[(int)State.Attack] = new AttackState(this);
         states[(int)State.Return] = new ReturnState(this);
         states[(int)State.Die] = new DieState(this);
 
         animator = gameObject.GetComponent<Animator>();
+        startPos = gameObject.transform.position;
     }
 
     private void Start()
@@ -57,11 +62,38 @@ public class Enemy : MonoBehaviour
         states[(int)curState].Enter();
     }
 
+    public void Reset()
+    {
+        transform.position = startPos;
+        ChangeState(State.Idle);
+        isStart = false;
+    }
+
+    private class IdleState : BaseState
+    {
+        private Enemy enemy;
+
+        public IdleState(Enemy enemy)
+        {
+            this.enemy = enemy;
+        }
+
+        public override void Update()
+        {
+            // 시작 했으면 움직이기
+            if(enemy.isStart)
+            {
+                enemy.ChangeState(State.Move);
+            }
+        }
+    }
+
+
     /// <summary>
-    /// 대기 상태
+    /// 좌우로 움직이는 상태
     /// 역할: 일정시간 만큼 좌우로 움직이다가 시간이 다 지나면 돌격
     /// </summary>
-    private class IdleState : BaseState
+    private class MoveState : BaseState
     {
         private Enemy enemy;
         private float refeatTime;
@@ -70,7 +102,7 @@ public class Enemy : MonoBehaviour
 
         private Coroutine moveRoutine;
 
-        public IdleState(Enemy enemy)
+        public MoveState(Enemy enemy)
         {
             this.enemy = enemy;
             moveRoutine = null;
@@ -228,6 +260,8 @@ public class Enemy : MonoBehaviour
             enemy.animator.speed = 1;   
         }
     }
+
+    
 
     private class DieState : BaseState
     {
