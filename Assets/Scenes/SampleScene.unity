@@ -162,8 +162,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 153725079}
   material: {fileID: 2100000, guid: e315ea06d84809549839beae2daa0705, type: 2}
-  weaponCollider: {fileID: 0}
-  enemy: {fileID: 0}
+  weaponCollider: {fileID: 1170040192}
+  enemy: {fileID: 153725081}
+--- !u!114 &153725081 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -5789650522035425053, guid: a424ad682861d174fb9ca25ec0680c62, type: 3}
+  m_PrefabInstance: {fileID: 1507833166}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 153725072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de5b6405b8d06ca448d9b3833e1a63a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &187485811 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5171286707757655324, guid: a424ad682861d174fb9ca25ec0680c62, type: 3}
+  m_PrefabInstance: {fileID: 1507833166}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9190a48d4bfab4142a54f30008d3dfe8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &309548565
 GameObject:
   m_ObjectHideFlags: 0
@@ -748,6 +770,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6883052600489117405, guid: 895f6f3c2d334633b5800312285058d2, type: 3}
   m_PrefabInstance: {fileID: 1856122181}
   m_PrefabAsset: {fileID: 0}
+--- !u!65 &1170040192 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 5254259306235391220, guid: a424ad682861d174fb9ca25ec0680c62, type: 3}
+  m_PrefabInstance: {fileID: 1507833166}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1225550459
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1167,7 +1194,7 @@ PrefabInstance:
     - target: {fileID: -5789650522035425053, guid: a424ad682861d174fb9ca25ec0680c62, type: 3}
       propertyPath: attackArea
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 187485811}
     - target: {fileID: 1314619294936235140, guid: a424ad682861d174fb9ca25ec0680c62, type: 3}
       propertyPath: m_Controller
       value: 

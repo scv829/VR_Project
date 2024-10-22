@@ -19,7 +19,6 @@ public class Attack : MonoBehaviour
     public void ParryingTiming()
     {
         StartCoroutine(ParryTimingRoutine());
-
         Debug.Log("패링 타이밍!");
     }
 
