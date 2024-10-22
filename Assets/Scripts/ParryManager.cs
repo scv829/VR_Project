@@ -1,9 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ParryManager : MonoBehaviour
 {
+    [SerializeField] BoxCollider parryRange;
+
+    private void Awake()
+    {
+        parryRange = GetComponent<BoxCollider>();
+    }
 
     private void OnEnable()
     {
@@ -15,13 +20,26 @@ public class ParryManager : MonoBehaviour
         Debug.Log("방패 해제!");
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.collider.gameObject.CompareTag("Enemy"))
+        // 충돌체가 투사체이고 충돌한 면이 방패의 back 방향일 때
+        if (other.gameObject.CompareTag("Bullet"))
         {
-            Destroy(collision.collider.gameObject);
-            Debug.Log($"패링 성공! 막은 공격 오브젝트의 이름 : {collision.collider.name} ");
+            Destroy(other.gameObject);
+            Debug.Log($"패링 성공! 막은 공격 오브젝트의 이름 : { other.name} ");
         }
-            Debug.Log($"현재 접촉중인 오브젝트 이름 : {collision.collider.name} ");
+        else if (other.gameObject.CompareTag("Weapon"))
+        {
+            Transform trans = other.transform;
+            while (!trans.gameObject.CompareTag("Enemy"))
+            {
+                trans = trans.parent;
+            }
+            trans.gameObject.GetComponent<Attack>().ParrySccuess();
+            Debug.Log($"패링 성공! 막은 공격 오브젝트의 이름 : {other.name} ");
+        }
     }
+
+    public void ParryOn() => parryRange.enabled = true;
+    public void ParryOff() => parryRange.enabled = false;
 }
