@@ -47,6 +47,7 @@ public class Tower : MonoBehaviour
         while (true) 
         { 
             Bullet bullet = Instantiate(bulletPrefab);
+            bullet.transform.position = muzzlePoint.position;
             bullet.Setting(playerTransform, moveSpeed);
             Destroy(bullet, 10f);
             yield return delay;
