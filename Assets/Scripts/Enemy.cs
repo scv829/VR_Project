@@ -27,7 +27,7 @@ public class Enemy : MonoBehaviour
 
     [Header("State")]
     [SerializeField] State curState;
-    public enum State { Idle, Move, Trace, Attack, Return, Die, Size }
+    public enum State { Idle, Move, Trace, Attack, Return, Size }
     private BaseState[] states = new BaseState[(int)State.Size];
     public void StartMove() => isStart = true;
 
@@ -38,7 +38,6 @@ public class Enemy : MonoBehaviour
         states[(int)State.Trace] = new TraceState(this);
         states[(int)State.Attack] = new AttackState(this);
         states[(int)State.Return] = new ReturnState(this);
-        states[(int)State.Die] = new DieState(this);
 
         animator = gameObject.GetComponent<Animator>();
         startPos = gameObject.transform.position;
@@ -190,7 +189,7 @@ public class Enemy : MonoBehaviour
         {
             // 플레이어를 향해 돌진
             enemy.transform.LookAt(enemy.player.gameObject.transform.position);
-            Vector3 playerPos = new Vector3(enemy.player.transform.position.x, enemy.transform.position.y, enemy.player.transform.position.z);
+            Vector3 playerPos = new Vector3(enemy.player.transform.position.x, 0f, enemy.player.transform.position.z);
             enemy.transform.position = Vector3.MoveTowards(enemy.transform.position, playerPos, traceSpeed * Time.deltaTime);
 
             // 만약 공격 범위에 들어 왔으면 공격 실행
@@ -231,10 +230,13 @@ public class Enemy : MonoBehaviour
         private Enemy enemy;
         private float returnSpeed;
 
+        Collider[] cartCollider;
+
         public ReturnState(Enemy enemy)
         {
             this.enemy = enemy;
             returnSpeed = enemy.moveSpeed * 2;
+            cartCollider = new Collider[1];
         }
 
         public override void Enter()
@@ -242,16 +244,19 @@ public class Enemy : MonoBehaviour
             // 돌아가는 애니메이션 실행
             enemy.animator.SetBool("Return", true);
             enemy.animator.speed = returnSpeed;
+            cartCollider[0] = null;
         }
 
         public override void Update()
         {
             enemy.transform.position = Vector3.MoveTowards(enemy.transform.position, enemy.returnPos, returnSpeed * Time.deltaTime);
             
-            if(enemy.transform.position.Equals(enemy.returnPos))
+            if(Physics.OverlapSphereNonAlloc(enemy.transform.position, 1f, cartCollider, LayerMask.GetMask("Cart")) == 1)
             {
+                enemy.transform.position = cartCollider[0].gameObject.transform.position;
                 enemy.ChangeState(State.Move);
             }
+
         }
 
         public override void Exit()
@@ -259,25 +264,6 @@ public class Enemy : MonoBehaviour
             enemy.animator.SetBool("Return", false);
             enemy.animator.speed = 1;   
         }
-    }
-
-    
-
-    private class DieState : BaseState
-    {
-        private Enemy enemy;
-
-        public DieState(Enemy enemy)
-        {
-            this.enemy = enemy;
-        }
-
-        public override void Enter()
-        {
-            // 사망 애니메이션 실행
-            Debug.Log($"{enemy.name} 사망!");
-        }
-
     }
 
 }

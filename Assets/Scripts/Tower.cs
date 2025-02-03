@@ -15,6 +15,7 @@ public class Tower : MonoBehaviour
     [SerializeField] Transform playerTransform; // 플레이어의 위치
 
     [SerializeField] float delayTime;           // 총알 생성 시간
+    [SerializeField] ParticleSystem effect;
 
     private Coroutine shootCoroutine;
 
@@ -27,6 +28,7 @@ public class Tower : MonoBehaviour
     {
         if (shootCoroutine == null)
         {
+            effect.Play();
             shootCoroutine = StartCoroutine(ShootRoutine());
         }
     }
@@ -35,6 +37,7 @@ public class Tower : MonoBehaviour
     {
         if (shootCoroutine != null)
         {
+            effect.Stop();
             StopCoroutine(shootCoroutine);
             shootCoroutine = null;
         }

@@ -13,6 +13,14 @@ public class Shield : MonoBehaviour
         quaternion = transform.rotation;
     }
 
+    private void Update()
+    {
+        if(transform.position.y < -1f)
+        {
+            Reset();
+        }
+    }
+
     public void Reset()
     {
         transform.position = pos;

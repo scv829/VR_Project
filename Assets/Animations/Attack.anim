@@ -34742,14 +34742,14 @@ AnimationClip:
   - time: 0.2
     functionName: ParryingTiming
     data: 
-    objectReferenceParameter: {fileID: 0}
+    objectReferenceParameter: {fileID: 11500000, guid: bdb18d45c2233bb4b9ea995ae59de745, type: 3}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
   - time: 0.43333334
     functionName: ParryFailed
     data: 
-    objectReferenceParameter: {fileID: 0}
+    objectReferenceParameter: {fileID: 11500000, guid: bdb18d45c2233bb4b9ea995ae59de745, type: 3}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
