@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Attack : MonoBehaviour
 {
@@ -8,6 +9,9 @@ public class Attack : MonoBehaviour
     [SerializeField] Material material;
     [SerializeField] BoxCollider weaponCollider;
     [SerializeField] Enemy enemy;
+
+    [SerializeField] UnityEvent successEvent;
+    [SerializeField] UnityEvent failedEvent;
 
     private void Awake()
     {
@@ -42,8 +46,9 @@ public class Attack : MonoBehaviour
         // 무기 콜라이어에 충돌이 없으면
         // 무기 콜라이더 종료
         weaponCollider.enabled = false;
-        // 데미지 입히기
-        Debug.Log("패링 실패!");
+        // 패링 실패 이펙트 발동
+        failedEvent?.Invoke();
+
         enemy.ChangeState(Enemy.State.Return);
     }
 
@@ -52,9 +57,10 @@ public class Attack : MonoBehaviour
     {
         // 실패 애니메이션
         animator.SetTrigger("HitTrigger");
-        // 몬스터 피격
+        // 패링 성공 이펙트 발동
+        successEvent?.Invoke();
+
         // 돌아가기
-        Debug.Log("패링 성공!");
         material.SetColor("_EmissionColor", Color.black * 1f);
         weaponCollider.enabled = false;
     }

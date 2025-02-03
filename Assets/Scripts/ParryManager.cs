@@ -4,6 +4,9 @@ using UnityEngine.UI;
 public class ParryManager : MonoBehaviour
 {
     [SerializeField] BoxCollider parryRange;
+    [SerializeField] ParticleSystem successEffect;
+    [SerializeField] ParticleSystem failedEffect;
+
 
     private void Awake()
     {
@@ -26,7 +29,7 @@ public class ParryManager : MonoBehaviour
         if (other.gameObject.CompareTag("Bullet"))
         {
             Destroy(other.gameObject);
-            Debug.Log($"패링 성공! 막은 공격 오브젝트의 이름 : { other.name} ");
+            ParrySuccess();
         }
         else if (other.gameObject.CompareTag("Weapon"))
         {
@@ -39,6 +42,9 @@ public class ParryManager : MonoBehaviour
             Debug.Log($"패링 성공! 막은 공격 오브젝트의 이름 : {other.name} ");
         }
     }
+
+    public void ParrySuccess() => successEffect.Play();
+    public void ParryFailed() => failedEffect.Play();
 
     public void ParryOn() => parryRange.enabled = true;
     public void ParryOff() => parryRange.enabled = false;
