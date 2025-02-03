@@ -7,24 +7,17 @@ public class ParryManager : MonoBehaviour
     [SerializeField] ParticleSystem successEffect;
     [SerializeField] ParticleSystem failedEffect;
 
+    [SerializeField] bool isParryStart;
 
     private void Awake()
     {
         parryRange = GetComponent<BoxCollider>();
     }
 
-    private void OnEnable()
-    {
-        Debug.Log("방패 장착!");
-    }
-
-    private void OnDisable()
-    {
-        Debug.Log("방패 해제!");
-    }
-
     private void OnTriggerEnter(Collider other)
     {
+        if (!isParryStart) return;
+
         // 충돌체가 투사체이고 충돌한 면이 방패의 back 방향일 때
         if (other.gameObject.CompareTag("Bullet"))
         {
@@ -48,4 +41,7 @@ public class ParryManager : MonoBehaviour
 
     public void ParryOn() => parryRange.enabled = true;
     public void ParryOff() => parryRange.enabled = false;
+
+    public void ParryManagerStart() => isParryStart = true;
+    public void ParryManagerStop() => isParryStart = false;
 }
